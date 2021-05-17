@@ -1,4 +1,4 @@
-
+import React, {useEffect} from 'react';
 import './App.css';
 import Header from './Header';
 import {BrowserRouter as Router,Switch, Route} from 'react-router-dom';
@@ -13,32 +13,28 @@ import { useStateValue } from './StateProvider';
 
 function App() {
 
-  //const [{loggedinuser}, dispatch] = useStateValue()
+  const [{loggedinuser}, dispatch] = useStateValue()
 
-   // useEffect(()=>{
-  //    const unsubscribe=auth.onAuthStateChange((userauth) =>{
-      //  if(userauth){
-        //  dispatch({
-          //  type:'SET_LOGIN',
-            //loggedinuser:userauth
-          //})
-        //}else{
-          //dispatch({
-            //type: 'SET_LOGIN',
-            //loggedinuser:null
-         // })
-       // }
-     // })
-      //return ()=>{
-        //unsubscribe();
-     // }
-  //  },[])
+   useEffect(()=>{
+      const unsubscribe=auth.onAuthStateChanged((userauth) =>{
+        if(userauth){
+         dispatch({
+           type:'SET_LOGIN',
+            loggedinuser:userauth
+          })
+        }else{
+          dispatch({
+            type: 'SET_LOGIN',
+            loggedinuser:null
+         })
+       }
+     })
+      return ()=>{
+        unsubscribe();
+     }
+   },[])
 
-   // return () =>{
-     // unsubscribe();
-    //}
-
-
+   
   return (
     <Router>
     <div className="App">
